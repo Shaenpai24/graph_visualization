@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Graph Theory Visualizations</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section {
+            margin: 40px 0;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #3498db;
+        }
+        .section h2 {
+            color: #2980b9;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        .canvas-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .canvas-item {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+        .canvas-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        canvas {
+            border: 3px solid #3498db;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        .canvas-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 15px 0 10px 0;
+            font-size: 1.3em;
+        }
+        .canvas-description {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .controls {
+            margin: 15px 0;
+        }
+        .btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .complexity {
+            background: #e8f5e8;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #27ae60;
+            margin: 10px 0;
+            border: 1px solid #27ae60;
+        }
+        .legend {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #ffeaa7;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 8px 15px 8px 0;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .color-box {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            margin-right: 8px;
+            vertical-align: middle;
+            border-radius: 4px;
+            border: 2px solid #333;
+        }
+        .status {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border-left: 4px solid #2196f3;
+        }
+        .algorithm-info {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 Complete Graph Theory Visualizations</h1>
+
+        <div class="section">
+            <h2>📊 1. Graph Types & Representations</h2>
+            <p>Understanding different graph types and how they're stored in memory</p>
+
+            <div class="canvas-container">
+                <div class="canvas-item">
+                    <div class="canvas-title">Undirected Graph</div>
+                    <div class="canvas-description">Edges represent symmetric, bidirectional relationships</div>
+                    <canvas id="undirectedGraph" width="320" height="260"></canvas>
+                    <div class="algorithm-info">Example: Social networks, road systems</div>
+                </div>
+
+                <div class="canvas-item">
+                    <div class="canvas-title">Directed Graph (Digraph)</div>
+                    <div class="canvas-description">Edges have direction - from source to target</div>
+                    <canvas id="directedGraph" width="320" height="260"></canvas>
+                    <div class="algorithm-info">Example: Web links, dependency graphs</div>
+                </div>
+
+                <div class="canvas-item">
+                    <div class="canvas-title">Weighted Graph</div>
+                    <div class="canvas-description">Edges have associated costs or weights</div>
+                    <canvas id="weightedGraph" width="320" height="260"></canvas>
+                    <div class="algorithm-info">Example: GPS routing, network capacity</div>
+                </div>
+
+                <div class="canvas-item">
+                    <div class="canvas-title">Adjacency Matrix</div>
+                    <div class="canvas-description">2D array representation - O(V²) space</div>
+                    <canvas id="adjacencyMatrix" width="320" height="260"></canvas>
+                    <div class="complexity">Space: O(V²) | Edge Check: O(1)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔍 2. Graph Traversal Algorithms</h2>
+            <div class="legend">
+                <strong>Color Legend:</strong>
+                <div class="legend-item"><span class="color-box" style="background: #e74c3c;"></span>Current Node</div>
+                <div class="legend-item"><span class="color-box" style="background: #f39c12;"></span>In Queue/Stack</div>
+                <div class="legend-item"><span class="color-box" style="background: #27ae60;"></span>Visited</div>
+                <div class="legend-item"><span class="color-box" style="background: #3498db;"></span>Unvisited</div>
+            </div>
+
+            <div class="canvas-container">
+                <div class="canvas-item">
+                    <div class="canvas-title">Breadth-First Search (BFS)</div>
+                    <div class="canvas-description">Explores level by level using FIFO queue</div>
+                    <canvas id="bfsCanvas" width="380" height="300"></canvas>
+                    <div class="complexity">Time: O(V + E) | Space: O(V)</div>
+                    <div class="status" id="bfsStatus">Ready to start BFS from node 0</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startBFS()" id="bfsStart">Start BFS</button>
+                        <button class="btn" onclick="resetBFS()">Reset</button>
+                        <button class="btn" onclick="stepBFS()" id="bfsStep">Step</button>
+                    </div>
+                </div>
+
+                <div class="canvas-item">
+                    <div class="canvas-title">Depth-First Search (DFS)</div>
+                    <div class="canvas-description">Explores deeply using LIFO stack/recursion</div>
+                    <canvas id="dfsCanvas" width="380" height="300"></canvas>
+                    <div class="complexity">Time: O(V + E) | Space: O(V)</div>
+                    <div class="status" id="dfsStatus">Ready to start DFS from node 0</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startDFS()" id="dfsStart">Start DFS</button>
+                        <button class="btn" onclick="resetDFS()">Reset</button>
+                        <button class="btn" onclick="stepDFS()" id="dfsStep">Step</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🛤️ 3. Shortest Path: Dijkstra's Algorithm</h2>
+            <div class="algorithm-info">
+                <strong>Dijkstra's Algorithm:</strong> Finds shortest paths from source to all vertices in weighted graphs with non-negative weights. Uses greedy approach - always processes closest unvisited vertex.
+            </div>
+
+            <div class="canvas-container">
+                <div class="canvas-item">
+                    <div class="canvas-title">Dijkstra's Algorithm Visualization</div>
+                    <div class="canvas-description">Greedy shortest path with distance labels</div>
+                    <canvas id="dijkstraCanvas" width="450" height="350"></canvas>
+                    <div class="complexity">Time: O((V+E) log V) | Space: O(V)</div>
+                    <div class="status" id="dijkstraStatus">Ready to find shortest paths from node 0</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startDijkstra()" id="dijkstraStart">Start Dijkstra</button>
+                        <button class="btn" onclick="resetDijkstra()">Reset</button>
+                        <button class="btn" onclick="stepDijkstra()" id="dijkstraStep">Step</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🌳 4. Minimum Spanning Trees (MST)</h2>
+            <div class="algorithm-info">
+                <strong>MST Problem:</strong> Find a subgraph that connects all vertices with minimum total edge weight, containing no cycles. Two main algorithms: Prim's (grows from vertex) and Kruskal's (sorts edges).
+            </div>
+
+            <div class="canvas-container">
+                <div class="canvas-item">
+                    <div class="canvas-title">Prim's Algorithm</div>
+                    <div class="canvas-description">Grows tree by adding minimum weight edge to unvisited vertex</div>
+                    <canvas id="primCanvas" width="380" height="320"></canvas>
+                    <div class="complexity">Time: O((V+E) log V) | Space: O(V)</div>
+                    <div class="status" id="primStatus">Ready to build MST starting from node 0</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startPrim()" id="primStart">Start Prim's</button>
+                        <button class="btn" onclick="resetPrim()">Reset</button>
+                        <button class="btn" onclick="stepPrim()" id="primStep">Step</button>
+                    </div>
+                </div>
+
+                <div class="canvas-item">
+                    <div class="canvas-title">Kruskal's Algorithm</div>
+                    <div class="canvas-description">Sorts edges, adds them if they don't create cycles</div>
+                    <canvas id="kruskalCanvas" width="380" height="320"></canvas>
+                    <div class="complexity">Time: O(E log E) | Space: O(V)</div>
+                    <div class="status" id="kruskalStatus">Ready to build MST by sorting edges</div>
+                    <div class="controls">
+                        <button class="btn" onclick="startKruskal()" id="kruskalStart">Start Kruskal's</button>
+                        <button class="btn" onclick="resetKruskal()">Reset</button>
+                        <button class="btn" onclick="stepKruskal()" id="kruskalStep">Step</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // CORRECTION: All code moved inside a window.onload event listener to ensure
+    // the DOM is fully loaded before trying to access canvas elements.
+    window.onload = function() {
+
+        // Utility functions
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function drawNode(ctx, x, y, label, color = '#3498db', textColor = 'white', extraText = '') {
+            // Draw node circle
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y, 22, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.strokeStyle = '#2c3e50';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            // Draw label
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(label.toString(), x, y);
+
+            // Draw extra text (like distance)
+            if (extraText) {
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = 'bold 12px Arial';
+                ctx.fillText(extraText, x, y + 38);
+            }
+        }
+
+        function drawEdge(ctx, x1, y1, x2, y2, weight = null, color = '#7f8c8d', directed = false, highlighted = false, dashed = false) {
+            ctx.strokeStyle = highlighted ? '#e74c3c' : color;
+            ctx.lineWidth = highlighted ? 4 : 2;
+
+            if (dashed) {
+                ctx.setLineDash([5, 5]);
+            } else {
+                ctx.setLineDash([]);
+            }
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Draw arrow for directed edges
+            if (directed) {
+                const angle = Math.atan2(y2 - y1, x2 - x1);
+                const arrowLength = 15;
+                const arrowAngle = 0.5;
+
+                const arrowX = x2 - 25 * Math.cos(angle);
+                const arrowY = y2 - 25 * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(arrowX, arrowY);
+                ctx.lineTo(arrowX - arrowLength * Math.cos(angle - arrowAngle),
+                    arrowY - arrowLength * Math.sin(angle - arrowAngle));
+                ctx.moveTo(arrowX, arrowY);
+                ctx.lineTo(arrowX - arrowLength * Math.cos(angle + arrowAngle),
+                    arrowY - arrowLength * Math.sin(angle + arrowAngle));
+                ctx.stroke();
+            }
+
+            // Draw weight label
+            if (weight !== null) {
+                const midX = (x1 + x2) / 2;
+                const midY = (y1 + y2) / 2;
+                ctx.fillStyle = 'white';
+                ctx.fillRect(midX - 15, midY - 10, 30, 20);
+                ctx.strokeStyle = '#2c3e50';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(midX - 15, midY - 10, 30, 20);
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(weight.toString(), midX, midY);
+            }
+
+            ctx.setLineDash([]); // Reset dash
+        }
+
+        // Graph data and positions
+        const positions = [
+            { x: 100, y: 80 },  // 0
+            { x: 250, y: 80 },  // 1
+            { x: 175, y: 160 }, // 2
+            { x: 100, y: 240 }, // 3
+            { x: 250, y: 240 }  // 4
+        ];
+        
+        const edges = [
+            [0, 1], [1, 2], [2, 3], [3, 4], [4, 0], [1, 4]
+        ];
+
+        const weightedEdges = [
+            [0, 1, 4], [1, 2, 2], [2, 3, 3], [3, 4, 1], [4, 0, 5], [1, 4, 7]
+        ];
+
+        const adjacencyList = {
+            0: [1, 4],
+            1: [0, 2, 4],
+            2: [1, 3],
+            3: [2, 4],
+            4: [0, 1, 3]
+        };
+
+        // Static graph drawings
+        function drawUndirectedGraph() {
+            const canvas = document.getElementById('undirectedGraph');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            edges.forEach(([u, v]) => {
+                drawEdge(ctx, positions[u].x, positions[u].y, positions[v].x, positions[v].y);
+            });
+            positions.forEach((pos, i) => {
+                drawNode(ctx, pos.x, pos.y, i);
+            });
+        }
+
+        function drawDirectedGraph() {
+            const canvas = document.getElementById('directedGraph');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            edges.forEach(([u, v]) => {
+                drawEdge(ctx, positions[u].x, positions[u].y, positions[v].x, positions[v].y, null, '#7f8c8d', true);
+            });
+            positions.forEach((pos, i) => {
+                drawNode(ctx, pos.x, pos.y, i);
+            });
+        }
+
+        function drawWeightedGraph() {
+            const canvas = document.getElementById('weightedGraph');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            weightedEdges.forEach(([u, v, w]) => {
+                drawEdge(ctx, positions[u].x, positions[u].y, positions[v].x, positions[v].y, w);
+            });
+            positions.forEach((pos, i) => {
+                drawNode(ctx, pos.x, pos.y, i);
+            });
+        }
+
+        function drawAdjacencyMatrix() {
+            const canvas = document.getElementById('adjacencyMatrix');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const matrix = [
+                [0, 1, 0, 0, 1],
+                [1, 0, 1, 0, 1],
+                [0, 1, 0, 1, 0],
+                [0, 0, 1, 0, 1],
+                [1, 1, 0, 1, 0]
+            ];
+
+            const cellSize = 40;
+            const startX = 80;
+            const startY = 60;
+
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    const x = startX + j * cellSize;
+                    const y = startY + i * cellSize;
+
+                    ctx.fillStyle = matrix[i][j] ? '#3498db' : '#ecf0f1';
+                    ctx.fillRect(x, y, cellSize, cellSize);
+                    ctx.strokeStyle = '#2c3e50';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(x, y, cellSize, cellSize);
+
+                    ctx.fillStyle = matrix[i][j] ? 'white' : '#7f8c8d';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(matrix[i][j].toString(), x + cellSize / 2, y + cellSize / 2);
+                }
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText(i.toString(), startX - 25, startY + i * cellSize + cellSize / 2);
+            }
+            for (let j = 0; j < 5; j++) {
+                ctx.fillStyle = '#2c3e50';
+                ctx.fillText(j.toString(), startX + j * cellSize + cellSize / 2, startY - 25);
+            }
+        }
+
+        // BFS Implementation
+        let bfsState = {};
+        function resetBFS() {
+            bfsState = {
+                visited: new Set(),
+                queue: [],
+                current: -1,
+                visitOrder: [],
+                animating: false,
+                step: 0
+            };
+            document.getElementById('bfsStart').disabled = false;
+            document.getElementById('bfsStep').disabled = false;
+            document.getElementById('bfsStatus').textContent = 'Ready to start BFS from node 0';
+            drawBFS();
+        }
+
+        function drawBFS() {
+            const canvas = document.getElementById('bfsCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            edges.forEach(([u, v]) => {
+                drawEdge(ctx, positions[u].x, positions[u].y, positions[v].x, positions[v].y);
+            });
+
+            positions.forEach((pos, i) => {
+                let color = '#3498db'; // unvisited
+                if (i === bfsState.current) color = '#e74c3c'; // current
+                else if (bfsState.visited.has(i)) color = '#27ae60'; // visited
+                else if (bfsState.queue.includes(i)) color = '#f39c12'; // in queue
+                drawNode(ctx, pos.x, pos.y, i, color);
+            });
+
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('Queue: [' + bfsState.queue.join(', ') + ']', 10, canvas.height - 40);
+            ctx.fillText('Visited: [' + bfsState.visitOrder.join(', ') + ']', 10, canvas.height - 20);
+        }
+        
+        async function startBFS() {
+            if (bfsState.animating) return;
+            resetBFS();
+            bfsState.animating = true;
+            document.getElementById('bfsStart').disabled = true;
+            document.getElementById('bfsStep').disabled = true;
+
+            bfsState.queue = [0];
+            drawBFS();
+            await sleep(800);
+
+            while (bfsState.queue.length > 0) {
+                const current = bfsState.queue.shift();
+                if (bfsState.visited.has(current)) continue;
+
+                bfsState.current = current;
+                bfsState.visited.add(current);
+                bfsState.visitOrder.push(current);
+
+                document.getElementById('bfsStatus').textContent = `Processing node ${current}`;
+                drawBFS();
+                await sleep(1200);
+
+                const neighbors = adjacencyList[current];
+                for (const neighbor of neighbors) {
+                    if (!bfsState.visited.has(neighbor) && !bfsState.queue.includes(neighbor)) {
+                        bfsState.queue.push(neighbor);
+                    }
+                }
+                
+                drawBFS();
+                await sleep(800);
+            }
+
+            bfsState.current = -1;
+            document.getElementById('bfsStatus').textContent = 'BFS Complete! Visit order: [' + bfsState.visitOrder.join(', ') + ']';
+            drawBFS();
+            bfsState.animating = false;
+            document.getElementById('bfsStart').disabled = false;
+        }
+
+        function stepBFS() {
+            if (bfsState.animating) return;
+            document.getElementById('bfsStart').disabled = true;
+
+            if (bfsState.queue.length === 0 && bfsState.visitOrder.length === 0) {
+                bfsState.queue = [0];
+                document.getElementById('bfsStatus').textContent = `Step 0: Initialize queue with node 0`;
+                drawBFS();
+                return;
+            }
+
+            if (bfsState.queue.length > 0) {
+                const current = bfsState.queue.shift();
+                 if (bfsState.visited.has(current)) {
+                    stepBFS(); // Skip visited nodes
+                    return;
+                }
+                
+                bfsState.current = current;
+                bfsState.visited.add(current);
+                bfsState.visitOrder.push(current);
+                document.getElementById('bfsStatus').textContent = `Step ${bfsState.step++}: Visit ${current}, add neighbors to queue`;
+                
+                adjacencyList[current].forEach(neighbor => {
+                    if (!bfsState.visited.has(neighbor) && !bfsState.queue.includes(neighbor)) {
+                        bfsState.queue.push(neighbor);
+                    }
+                });
+                drawBFS();
+            } else {
+                document.getElementById('bfsStatus').textContent = 'BFS Complete!';
+                document.getElementById('bfsStep').disabled = true;
+                bfsState.current = -1;
+                drawBFS();
+            }
+        }
+
+        // DFS Implementation
+        let dfsState = {};
+        function resetDFS() {
+             dfsState = {
+                visited: new Set(),
+                stack: [],
+                current: -1,
+                visitOrder: [],
+                animating: false,
+                step: 0
+            };
+            document.getElementById('dfsStart').disabled = false;
+            document.getElementById('dfsStep').disabled = false;
+            document.getElementById('dfsStatus').textContent = 'Ready to start DFS from node 0';
+            drawDFS();
+        }
+
+        function drawDFS() {
+            const canvas = document.getElementById('dfsCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            edges.forEach(([u, v]) => {
+                drawEdge(ctx, positions[u].x, positions[u].y, positions[v].x, positions[v].y);
+            });
+
+            positions.forEach((pos, i) => {
+                let color = '#3498db';
+                if (i === dfsState.current) color = '#e74c3c';
+                else if (dfsState.visited.has(i)) color = '#27ae60';
+                else if (dfsState.stack.includes(i)) color = '#f39c12';
+                drawNode(ctx, pos.x, pos.y, i, color);
+            });
+
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('Stack: [' + dfsState.stack.join(', ') + ']', 10, canvas.height - 40);
+            ctx.fillText('Visited: [' + dfsState.visitOrder.join(', ') + ']', 10, canvas.height - 20);
+        }
+        
+        async function startDFS() {
+            if (dfsState.animating) return;
+            resetDFS();
+            dfsState.animating = true;
+            document.getElementById('dfsStart').disabled = true;
+            document.getElementById('dfsStep').disabled = true;
+
+            dfsState.stack = [0];
+            drawDFS();
+            await sleep(800);
+
+            while (dfsState.stack.length > 0) {
+                const current = dfsState.stack.pop();
+                if (dfsState.visited.has(current)) continue;
+
+                dfsState.current = current;
+                dfsState.visited.add(current);
+                dfsState.visitOrder.push(current);
+
+                document.getElementById('dfsStatus').textContent = `Processing node ${current}`;
+                drawDFS();
+                await sleep(1200);
+
+                const neighbors = adjacencyList[current].slice().reverse();
+                for(const neighbor of neighbors) {
+                    if (!dfsState.visited.has(neighbor)) {
+                        dfsState.stack.push(neighbor);
+                    }
+                }
+                
+                drawDFS();
+                await sleep(800);
+            }
+
+            dfsState.current = -1;
+            document.getElementById('dfsStatus').textContent = 'DFS Complete! Visit order: [' + dfsState.visitOrder.join(', ') + ']';
+            drawDFS();
+            dfsState.animating = false;
+            document.getElementById('dfsStart').disabled = false;
+        }
+
+        function stepDFS() {
+            if (dfsState.animating) return;
+            document.getElementById('dfsStart').disabled = true;
+
+            if (dfsState.stack.length === 0 && dfsState.visitOrder.length === 0) {
+                dfsState.stack = [0];
+                document.getElementById('dfsStatus').textContent = `Step 0: Initialize stack with node 0`;
+                drawDFS();
+                return;
+            }
+
+            if (dfsState.stack.length > 0) {
+                const current = dfsState.stack.pop();
+                if (dfsState.visited.has(current)) {
+                    stepDFS(); // Skip visited nodes
+                    return;
+                }
+                
+                dfsState.current = current;
+                dfsState.visited.add(current);
+                dfsState.visitOrder.push(current);
+                document.getElementById('dfsStatus').textContent = `Step ${dfsState.step++}: Visit ${current}, add neighbors to stack`;
+                
+                const neighbors = adjacencyList[current].slice().reverse();
+                neighbors.forEach(neighbor => {
+                    if (!dfsState.visited.has(neighbor)) {
+                        dfsState.stack.push(neighbor);
+                    }
+                });
+                drawDFS();
+            } else {
+                document.getElementById('dfsStatus').textContent = 'DFS Complete!';
+                document.getElementById('dfsStep').disabled = true;
+                dfsState.current = -1;
+                drawDFS();
+            }
+        }
+        
+        // CORRECTION: Added placeholder functions and state for Dijkstra, Prim, and Kruskal
+        // so the page doesn't crash. You can fill these in with the full algorithm logic.
+        let dijkstraState = {};
+        function resetDijkstra() {
+            dijkstraState = {};
+            document.getElementById('dijkstraStatus').textContent = 'Dijkstra not implemented yet.';
+            const canvas = document.getElementById('dijkstraCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+        }
+        function startDijkstra() { alert("Dijkstra animation not implemented."); }
+        function stepDijkstra() { alert("Dijkstra step-by-step not implemented."); }
+
+        let primState = {};
+        function resetPrim() {
+            primState = {};
+             document.getElementById('primStatus').textContent = 'Prim not implemented yet.';
+            const canvas = document.getElementById('primCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+        }
+        function startPrim() { alert("Prim's animation not implemented."); }
+        function stepPrim() { alert("Prim's step-by-step not implemented."); }
+
+        let kruskalState = {};
+        function resetKruskal() {
+            kruskalState = {};
+            document.getElementById('kruskalStatus').textContent = 'Kruskal not implemented yet.';
+            const canvas = document.getElementById('kruskalCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+        }
+        function startKruskal() { alert("Kruskal's animation not implemented."); }
+        function stepKruskal() { alert("Kruskal's step-by-step not implemented."); }
+
+        // CORRECTION: Make the global functions (attached to onclick) accessible
+        // from the window object now that the code is wrapped in onload.
+        window.startBFS = startBFS;
+        window.resetBFS = resetBFS;
+        window.stepBFS = stepBFS;
+        window.startDFS = startDFS;
+        window.resetDFS = resetDFS;
+        window.stepDFS = stepDFS;
+        window.startDijkstra = startDijkstra;
+        window.resetDijkstra = resetDijkstra;
+        window.stepDijkstra = stepDijkstra;
+        window.startPrim = startPrim;
+        window.resetPrim = resetPrim;
+        window.stepPrim = stepPrim;
+        window.startKruskal = startKruskal;
+        window.resetKruskal = resetKruskal;
+        window.stepKruskal = stepKruskal;
+        
+        // CORRECTION: Initial draw calls for all canvases.
+        // This was the main reason nothing appeared on the page.
+        drawUndirectedGraph();
+        drawDirectedGraph();
+        drawWeightedGraph();
+        drawAdjacencyMatrix();
+        resetBFS();
+        resetDFS();
+        resetDijkstra();
+        resetPrim();
+        resetKruskal();
+    };
+</script>
+
+</body>
+</html>
